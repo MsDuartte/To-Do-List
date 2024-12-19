@@ -7,7 +7,6 @@ Além do CRUD em Python e Django e toda a lógica de programação envolvida, a 
 - [Descrição](#descrição)
 - [Funcionalidades](#funcionalidades)
 - [Instalação](#instalação)
-- [Uso](#uso)
 - [Contato](#contato)
 
 ## Descrição
@@ -52,4 +51,10 @@ Matheus Santos Duarte
 E-mail: msduarte.matheus@gmail.com
 
 Linkedin: https://www.linkedin.com/in/matheus-duarte-53601a144/
+
+## Preview
+
+
+![Tela de Login](https://github.com/user-attachments/assets/60c8b258-d951-4bc6-a307-f1e09b5fe8bc)
+
    
