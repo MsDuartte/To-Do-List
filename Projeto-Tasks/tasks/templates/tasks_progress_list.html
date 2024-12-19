@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  </head>
+
+<div class="container">
+    <div class= "row justify-content-center">
+        <div class="col-md-6 rounded-1 mb-3 bg-body-secondary mt-4">
+            <div class="d-flex flex-column">
+              <h3 class="text-center border-bottom border-dark">Tarefas em Andamento <span class=" mb-1 badge bg-secondary">{{tasks_in_progress_count}}</span></h3>
+                <div>
+                    {% if tasks %}
+                    {% for task in tasks %}
+                        <div class="list-group list-group-item-warning mb-2">
+                            <a href="{% url 'task_detail' task.pk %}" class="list-group-item list-group-item-action " aria-current="true">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h5 class="mb-1">Titulo: {{task.title}}</h5>
+                                    <small>{{task.created}}</small>
+                                </div>
+                                <p class="mb-1"><b>Descrição:</b> {{task.describe}}</p>
+                                <small>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-hourglass-split" viewBox="0 0 16 16">
+                                        <path d="M2.5 15a.5.5 0 1 1 0-1h1v-1a4.5 4.5 0 0 1 2.557-4.06c.29-.139.443-.377.443-.59v-.7c0-.213-.154-.451-.443-.59A4.5 4.5 0 0 1 3.5 3V2h-1a.5.5 0 0 1 0-1h11a.5.5 0 0 1 0 1h-1v1a4.5 4.5 0 0 1-2.557 4.06c-.29.139-.443.377-.443.59v.7c0 .213.154.451.443.59A4.5 4.5 0 0 1 12.5 13v1h1a.5.5 0 0 1 0 1zm2-13v1c0 .537.12 1.045.337 1.5h6.326c.216-.455.337-.963.337-1.5V2zm3 6.35c0 .701-.478 1.236-1.011 1.492A3.5 3.5 0 0 0 4.5 13s.866-1.299 3-1.48zm1 0v3.17c2.134.181 3 1.48 3 1.48a3.5 3.5 0 0 0-1.989-3.158C8.978 9.586 8.5 9.052 8.5 8.351z"/>
+                                    </svg>
+                                </small>
+                            </a>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <p class="mt-3">Nenhuma nova tarefa encontrada.</p>
+                {% endif %}
+                </div>
+                <!-- Paginação -->
+                {% if is_paginated %}
+                <nav aria-label="Paginação">
+                    <ul class="pagination justify-content-center mt-4">
+                        <!-- Link Anterior -->
+                        {% if page_obj.has_previous %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Anterior</a>
+                            </li>
+                        {% else %}
+                            <li class="page-item disabled">
+                                <a class="page-link" href="#" tabindex="-1">Anterior</a>
+                            </li>
+                        {% endif %}
+
+                        <!-- Números das Páginas -->
+                        {% for num in paginator.page_range %}
+                            {% if page_obj.number == num %}
+                                <li class="page-item active" aria-current="page">
+                                    <a class="page-link" href="#">{{ num }} <span class="sr-only"></span></a>
+                                </li>
+                            {% else %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+
+                        <!-- Link Próximo -->
+                        {% if page_obj.has_next %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ page_obj.next_page_number }}">Próximo</a>
+                            </li>
+                        {% else %}
+                            <li class="page-item disabled">
+                                <a class="page-link" href="#" tabindex="-1">Próximo</a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+                {% endif %}
+                <!-- Fim da Paginação -->
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+

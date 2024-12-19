@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+{% block content %}
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+  <div class="container">
+    <form method="GET" action="{% url 'tasks_list' %}">
+      <div class="input-group mx-auto mt-3 mb-3 " style="width: 300px;">
+        <input type="text" name="search" class="form-control" placeholder="Buscar Tarefa..." value="{{search}}" aria-describedby="button-addon2">
+        <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Buscar</button>
+      </div>
+    </form>
+    <div class="row">
+        <div class="col-md-4 rounded-3 mb-3 bg-body-secondary">
+            <div class="d-flex flex-column">
+              <h3 class="text-center border-bottom border-dark">Novas Tarefas <span class=" mb-1 badge bg-secondary">{{ tasks_new_count }}</span></h3>
+                <div>
+                  {% if tasks %}
+                    {% for task in tasks_new %}
+                      <div class="list-group list-group-item-primary mb-2">
+                        <a href="{% url "task_detail" task.pk %}" class="list-group-item list-group-item-action " aria-current="true">
+                          <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1">Titulo: {{task.title}}</h5>
+                            <small>{{task.created}}</small>
+                          </div>
+                          <p class="mb-1"><b>Descrição:</b> {{task.describe|truncatechars:50}}</p>
+                          <small>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-circle" viewBox="0 0 16 16">
+                              <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+                            </svg>
+                          </small>
+                        </a>
+                      </div>
+                    {% endfor %}
+                    {% if tasks_new_count > 5 %}
+                      <a href="{% url 'new_tasks_list' %}" class="btn btn-secondary mt-2">Ver todas</a>
+                    {% endif %}
+                  {% endif %}
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4 mb-3 border border-2 border-top-0 border-bottom-0 rounded-3 bg-body-secondary">
+          <div class="d-flex flex-column">
+            <h3 class="text-center border-bottom border-dark">Tarefas em Andamento <span class=" mb-1 badge bg-secondary">{{ tasks_in_progress_count }}</span></h3>
+            <div>
+              {% if tasks %}
+                {% for task in tasks_in_progress %}
+                  <div class="list-group list-group-item-warning mb-2">
+                    <a href="{% url "task_detail" task.pk %}" class="list-group-item list-group-item-action " aria-current="true">
+                      <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1">Titulo: {{task.title}}</h5>
+                        <small>{{task.created}}</small>
+                      </div>
+                      <p class="mb-1"><b>Descrição:</b> {{task.describe|truncatechars:50}}</p>
+                      <small>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-hourglass-split" viewBox="0 0 16 16">
+                          <path d="M2.5 15a.5.5 0 1 1 0-1h1v-1a4.5 4.5 0 0 1 2.557-4.06c.29-.139.443-.377.443-.59v-.7c0-.213-.154-.451-.443-.59A4.5 4.5 0 0 1 3.5 3V2h-1a.5.5 0 0 1 0-1h11a.5.5 0 0 1 0 1h-1v1a4.5 4.5 0 0 1-2.557 4.06c-.29.139-.443.377-.443.59v.7c0 .213.154.451.443.59A4.5 4.5 0 0 1 12.5 13v1h1a.5.5 0 0 1 0 1zm2-13v1c0 .537.12 1.045.337 1.5h6.326c.216-.455.337-.963.337-1.5V2zm3 6.35c0 .701-.478 1.236-1.011 1.492A3.5 3.5 0 0 0 4.5 13s.866-1.299 3-1.48zm1 0v3.17c2.134.181 3 1.48 3 1.48a3.5 3.5 0 0 0-1.989-3.158C8.978 9.586 8.5 9.052 8.5 8.351z"/>
+                        </svg>
+                      </small>
+                    </a>
+                  </div>
+                {% endfor %}
+                {% if tasks_in_progress_count > 5 %}
+                  <a href="{% url 'progress_tasks_list' %}" class="btn btn-secondary mt-2">Ver todas</a>
+                {% endif %}
+              {% endif %}
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4 rounded-3 mb-3 bg-body-secondary">
+          <div class="d-flex flex-column">
+            <h3 class="text-center border-bottom border-dark ">Tarefas Completas <span class=" mb-1 badge bg-secondary">{{ tasks_completed_count }}</span></h3>
+            <div>
+              {% if tasks %}
+                {% for task in tasks_completed %}
+                  <div class="list-group list-group-item-success mb-2">
+                    <a href="{% url "task_detail" task.pk %}" class="list-group-item list-group-item-action " aria-current="true">
+                      <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1">Titulo: {{task.title}}</h5>
+                      </div>
+                      <p class="mb-1"><b>Descrição:</b> {{task.describe|truncatechars:50}}</p>
+                      <small>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+                          <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                        </svg>
+                      </small>
+                      <small> <b>Concluído em:</b> {{task.datecompleted}}</small>
+                    </a>
+                  </div>
+                {% endfor %}
+                {% if tasks_completed_count > 5 %}
+                  <a href="{% url 'completed_tasks_list' %}" class="btn btn-secondary mt-2">Ver todas</a>
+                {% endif %}
+              {% endif %}
+            </div>
+          </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</body> 
+{% endblock %}
