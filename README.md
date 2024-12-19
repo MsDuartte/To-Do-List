@@ -30,16 +30,17 @@ Para executar este projeto localmente, siga os passos abaixo:
    git clone https://github.com/MsDuartte/To-Do-List.git
 
 2. Crie o Ambiente virtual:
+   '''bash
    python -m venv env
 
-3. Instale as dependências:
+4. Instale as dependências:
   pip install -r requirements.txt
 
-4. Faça as migrações:
+5. Faça as migrações:
   python manage.py makemigrations
   python manage.py migrate
 
-5. Execute o codigo:
+6. Execute o codigo:
   python manage.py runserver
 
 ## Contato
