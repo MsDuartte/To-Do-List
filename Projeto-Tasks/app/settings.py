@@ -78,10 +78,10 @@ WSGI_APPLICATION = 'app.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'tarefas',
+        'NAME': 'tasks',
         'USER': 'postgres',
-        'PASSWORD': '30336650m',
-        'HOST': 'localhost',
+        'PASSWORD': 'postgres',
+        'HOST': 'tasks_db',
         'PORT': '5432',
     }
 }
