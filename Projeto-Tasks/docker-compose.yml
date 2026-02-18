@@ -1,21 +1,24 @@
 services:
   tasks_web:
     build: .
-    restart: always
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/app
     ports:
       - "8000:8000"
+    depends_on:
+      - tasks_db
 
   tasks_db:
     image: postgres:15
     ports:
       - "5432:5432"
     volumes:
-      - postgres_data:/var/lib/postgresql/data  
+      - postgres_data:/var/lib/postgresql/data
     environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=tasks
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: tasks
 
 volumes:
   postgres_data:
-  
